@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dba-ops-agent"
+version = "0.1.0"
+description = "只读型 DBA 智能运维 Agent：智能巡检/异常诊断/性能诊断/快速恢复（方案生成）"
+requires-python = ">=3.10"
+readme = "README.md"
+dependencies = [
+    "pymysql>=1.1.0",
+    "psycopg2-binary>=2.9.9",
+    "oracledb>=2.0.0",
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.27.0",
+    "openai>=1.12.0",
+    "pyyaml>=6.0.1",
+    "click>=8.1.7",
+    "requests>=2.31.0",
+    "APScheduler>=3.10.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.3.0",
+    "mypy>=1.8.0",
+]
+
+[project.scripts]
+dba = "dba_ops_agent.cli.main:cli"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+dba_ops_agent = ["web/landing.html"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

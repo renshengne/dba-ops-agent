@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# 测试 / 类型 / lint 缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# 虚拟环境
+.venv/
+venv/
+env/
+
+# 配置密钥（含真实密码/API Key，禁止上传）
+config/config.yaml
+config/*.local.yaml
+
+# 巡检报告（含实际数据库指标，按需本地保留）
+reports/
+
+# IDE / 系统
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Trae 元数据
+.trae/

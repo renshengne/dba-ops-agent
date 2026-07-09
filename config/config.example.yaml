@@ -1,0 +1,80 @@
+databases:
+  prod-mysql:
+    dialect: mysql
+    host: 127.0.0.1
+    port: 3306
+    user: ro_dba
+    password: "${MYSQL_RO_PASSWORD}"
+    database: null
+    allow_write_account: false
+
+  prod-gaussdb:
+    dialect: gaussdb_pg
+    host: 127.0.0.1
+    port: 5432
+    user: ro_dba
+    password: "${GAUSSDB_RO_PASSWORD}"
+    database: postgres
+    allow_write_account: false
+
+  prod-oracle:
+    dialect: oracle
+    host: 127.0.0.1
+    port: 1521
+    user: ro_dba
+    password: "${ORACLE_RO_PASSWORD}"
+    service_name: ORCLPDB1
+    allow_write_account: false
+
+llm:
+  enabled: true
+  base_url: "http://127.0.0.1:8000/v1"
+  api_key: "${LLM_API_KEY}"
+  model: "glm-4"
+  timeout: 30
+
+notifier:
+  webhook:
+    type: feishu
+    url: "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
+  email:
+    enabled: false
+    smtp_host: "smtp.example.com"
+    smtp_port: 465
+    sender: "dba-agent@example.com"
+    password: "${SMTP_PASSWORD}"
+    recipients:
+      - "dba-team@example.com"
+
+patrol:
+  templates:
+    default:
+      metrics:
+        - connection_usage
+        - slow_queries
+        - lock_waits
+        - disk_usage
+        - replication_lag
+        - buffer_pool_hit_rate
+      thresholds:
+        connection_usage:
+          warn: 70
+          critical: 90
+        slow_queries:
+          warn: 5
+          critical: 20
+        lock_waits:
+          warn: 1
+          critical: 10
+        disk_usage:
+          warn: 75
+          critical: 90
+        replication_lag:
+          warn: 5
+          critical: 60
+        buffer_pool_hit_rate:
+          warn: 95
+          critical: 90
+      cron: "0 */6 * * *"
+
+reports_dir: "reports"
